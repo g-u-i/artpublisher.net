@@ -1,0 +1,22 @@
+{
+  "name": "madmap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify -t babelify main.js > build.js",
+    "start": "npm build &&  watchify -v -t babelify main.js -o build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "deku": "^0.4.9"
+  },
+  "devDependencies": {
+    "babelify": "^6.1.2",
+    "browserify": "^10.2.6",
+    "gulp-watch": "^4.2.4",
+    "watchify": "^3.2.3"
+  }
+}
