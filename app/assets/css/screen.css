@@ -4695,3 +4695,6 @@ body {
 #map {
   width: 100%;
   height: 100%; }
+
+.leaflet-container {
+  background-color: black !important; }
