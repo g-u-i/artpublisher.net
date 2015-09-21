@@ -61,7 +61,11 @@
 			var elements = tabletop.sheets(this.sheetName).elements;
 
 
+			// template test
 			console.log(elements);
+
+			punchcard(elements);
+			createList(elements);
 
 			for(var i = 0; i < elements.length; i++) {
 				var point = new Mapsheet.Point( { model: elements[i], fields: this.fields, popupContent: this.popupContent, popupTemplate: this.popupTemplate, markerOptions: this.markerOptions, titleColumn: this.titleColumn, click: this.click } );

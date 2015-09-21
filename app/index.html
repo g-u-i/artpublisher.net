@@ -7,12 +7,17 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="fullheight col-sm-4">
-        <hr/>
-        <h1>MAP - Micro Art Publisher</h1>
-        <p>www.artpublisher.net</p>
+      <div class="fullheight col-sm-7">
+        <div class="header">
+          <h1>MAP - Micro Art Publisher</h1>
+          <p>www.artpublisher.net</p>
+        </div>
+        <div id="viz">
+
+        </div>
+        <div id="list"></div>
       </div>
-      <div class="fullheight col-sm-8"><div id="map"></div></div>
+      <div class="fullheight col-sm-5"><div id="map"></div></div>
     </div>
 
     <script type="text/javascript" src="./assets/js/all.min.js"></script>
@@ -41,5 +46,25 @@
       <p><a href='{{link}}' target='_blank'>{{link}}</a></p>
     </script>
 
+    <script id="list-template" type="text/x-handlebars-template">
+        {{#each items}}
+          <div class="row">
+            <div class='col-sm-1'>{{country}}</div>
+            <div class='col-sm-2'>{{city}}</div>
+            <div class='col-sm-4'><a href='http://{{website}}' target='_blank'>{{name}}</a></div>
+            <div class='col-sm-5'>
+              {{#if publisher}} publisher, {{/if}}
+              {{#if distributor}} distributor, {{/if}}
+              {{#if bookShop}} bookShop, {{/if}}
+              {{#if collection}} collection, {{/if}}
+              {{#if artSpace}} artSpace, {{/if}}
+              {{#if research}} research, {{/if}}
+              {{#if website}} website, {{/if}}
+              {{#if blogInfo}} blogInfo, {{/if}}
+              {{#if fair}} fair, {{/if}}
+            </div>
+          </div>
+        {{/each}}
+    </script>
   </body>
 </html>
