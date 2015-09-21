@@ -21,7 +21,6 @@ gulp.task('build', function() {
       'bower_components/jquery/dist/jquery.js',
       'bower_components/tabletop/src/tabletop.js',
       'bower_components/lodash/lodash.js',
-      'bower_components/mapsheet/src/mapsheet.js',
       'bower_components/handlebars/handlebars.min.js',
       'bower_components/bootstrap/dist/js/bootstrap.js' ],
       {base: 'bower_components/'}
