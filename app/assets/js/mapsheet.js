@@ -61,10 +61,12 @@
 			var elements = _(tabletop.sheets(this.sheetName).elements)
         .filter(function(d){return d.lat !== "" && d.lng !== ""} )
         // .filter(function(d){return d.city === "Berlin"} )
+        .sortByAll(["country", "city", "name"])
         .forEach(function(d){
           d.lat = d.lat.replace(",",".");
           d.lng = d.lng.replace(",",".");
         })
+
         .value();
 
 			// template test

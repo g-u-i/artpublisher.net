@@ -4716,3 +4716,7 @@ body {
   #viz .punch {
     fill: black;
     opacity: .2; }
+
+.colHeader {
+  font-weight: bold;
+  margin-bottom: 20px; }
