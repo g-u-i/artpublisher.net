@@ -37,13 +37,13 @@ body {
   margin-bottom: 30px;
 }
 
-.axis {
+
+#viz {
   font-size: 11px;
-}
+  .axis {}
 
-.punch {
-  fill: black;
-
-  opacity: .2;
-
+  .punch {
+    fill: black;
+    opacity: .2;
+  }
 }

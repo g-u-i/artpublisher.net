@@ -4711,9 +4711,8 @@ body {
   margin-top: 20px;
   margin-bottom: 30px; }
 
-.axis {
+#viz {
   font-size: 11px; }
-
-.punch {
-  fill: black;
-  opacity: .2; }
+  #viz .punch {
+    fill: black;
+    opacity: .2; }

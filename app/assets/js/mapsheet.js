@@ -59,7 +59,7 @@
 			}
 
 			var elements = _(tabletop.sheets(this.sheetName).elements)
-        .filter(function(d){return d.lat !== ""} )
+        .filter(function(d){return d.lat !== "" && d.lng !== ""} )
         // .filter(function(d){return d.city === "Berlin"} )
         .forEach(function(d){
           d.lat = d.lat.replace(",",".");
@@ -169,6 +169,8 @@
 
 	Mapsheet.Providers.Leaflet = function(options) {
 		this.map = options.map;
+
+    // http://leaflet-extras.github.io/leaflet-providers/preview/
 
 		var attribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
