@@ -2,7 +2,6 @@ window.onload = function() { init() };
 // var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0AtG9_k99Q_n6dFJsV3drNldsRnZxN1dLX1ljbDVDZHc&output=html';
 var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1ZMnBLl0f6Xi0lzD7c9fKEGYzPqMQZyNn8mUPCJrve04/pubhtml?gid=1370801409&single=true';
 
-
 function init() {
   Mapsheet( { key: public_spreadsheet_url,
                 element: 'map',
@@ -44,7 +43,7 @@ function punchcard(elements){
   var colW = (w/type.length-1);
   var colH = (h/type.length-1);
 
-  console.log(data);
+ // console.log(data);
 
   var svg =
     d3.select('#viz')
@@ -96,13 +95,10 @@ function punchcard(elements){
     .text( function(d) { return d; } )
     .attr('y', function(d,i) { return (i * colH) + m })
     .attr('x', 10 )
-
 }
 
 function createList(elements){
-
   var listSource   = document.getElementById('list-template').innerHTML;
   var listTemplate = Handlebars.compile(listSource);
   $('#list').html(listTemplate({'items':elements}));
-
 }

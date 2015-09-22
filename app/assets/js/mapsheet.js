@@ -58,12 +58,16 @@
 				this.sheetName = tabletop.model_names[0];
 			}
 
-			var elements = tabletop.sheets(this.sheetName).elements;
-
+			var elements = _(tabletop.sheets(this.sheetName).elements)
+        .filter(function(d){return d.lat !== ""} )
+        // .filter(function(d){return d.city === "Berlin"} )
+        .forEach(function(d){
+          d.lat = d.lat.replace(",",".");
+          d.lng = d.lng.replace(",",".");
+        })
+        .value();
 
 			// template test
-			console.log(elements);
-
 			punchcard(elements);
 			createList(elements);
 
@@ -221,11 +225,13 @@
 
 		drawPoints: function(points) {
 			for(var i = 0; i < points.length; i++) {
+
 				if(!points[i].isValid()) { continue; }
 				var marker = this.drawMarker(points[i]);
 				marker.addTo(this.markerLayer);
         this.bounds.extend(marker.getLatLng());
-				points[i].marker = marker;
+
+        points[i].marker = marker;
 			};
 
 			this.markerLayer.addTo(this.map);
