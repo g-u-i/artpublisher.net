@@ -4,3 +4,4 @@ serverConfig.json
 app/assets/css/*.css
 app/assets/js/all.min.js
 .babelrc
+app/assets/js/all.min.js
