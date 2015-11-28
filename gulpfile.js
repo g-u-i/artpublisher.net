@@ -3,7 +3,9 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
-
+var gutil = require( 'gulp-util' );
+var ftp = require( 'vinyl-ftp' );
+var serverConfig = require('./serverConfig.json')
 var browserSync = require('browser-sync').create();
 
 gulp.task('sass', function() {
@@ -39,5 +41,23 @@ gulp.task('serve', ['sass'], function() {
     gulp.watch('./app/assets/scss/*.scss', ['sass']);
     gulp.watch("app/*.html").on('change', browserSync.reload);
 });
+
+gulp.task( 'deploy', function () {
+
+    var conn = ftp.create(serverConfig);
+    var globs = [
+        './app/assets/src/**',
+        './app/assets/css/**',
+        './app/assets/images/**',
+        './app/assets/js/**',
+        './app/assets/fonts/**',
+        './app/index.html'
+    ];
+
+    return gulp.src( globs, { base: '.', buffer: false } )
+        .pipe( conn.newer( '/' ) ) // only upload newer files
+        .pipe( conn.dest( '/' ) );
+
+} );
 
 gulp.task('default', [ 'sass', 'build', 'watch']);
