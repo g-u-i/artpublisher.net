@@ -20,8 +20,7 @@
             </div>
           </div>
         </div>
-
-
+          <div id="filters" class="row"></div>
           <div id="list"></div>
         </div>
       </div>
@@ -42,46 +41,9 @@
       </div>
       
     </div>
-
     <script type="text/javascript" src="./assets/js/all.min.js"></script>
     <script type="text/javascript" src="./assets/js/mapsheet.js"></script>
     <script type="text/javascript" src="./assets/js/mad.js"></script>
-
-
-    <script id="popup-template" type="text/x-handlebars-template">
-      <h3><a href='http://{{website}}' target='_blank'>{{name}}</a> ({{country}})</h3>
-      <p>{{Location}}</p>
-      <hr/>
-      <ul>
-        {{#if publisher}} <li>publisher</li> {{/if}}
-        {{#if distributor}} <li>distributor</li> {{/if}}
-        {{#if bookShop}} <li>bookShop </li> {{/if}}
-        {{#if collection}} <li>collection</li> {{/if}}
-        {{#if artSpace}} <li>artSpace</li> {{/if}}
-        {{#if research}} <li>research</li> {{/if}}
-        {{#if website}} <li>website </li> {{/if}}
-        {{#if blogInfo}} <li>blogInfo </li> {{/if}}
-        {{#if fair}} <li>fair</li> {{/if}}
-      </ul>
-
-      <hr/>
-
-      <p><a href='{{link}}' target='_blank'>{{link}}</a></p>
-    </script>
-
-    <script id="list-template" type="text/x-handlebars-template">
-          <div class="row colHeader">
-            <p class='col-sm-1'>country</p>
-            <p class='col-sm-2'>city</p>
-            <p class='col-sm-4'>www</p>
-          </div>
-        {{#each items}}
-          <div class="row">
-            <div class='col-sm-1'>{{country}}</div>
-            <div class='col-sm-2'>{{city}}</div>
-            <div class='col-sm-5'><a href='http://{{website}}' target='_blank'>{{name}}</a></div>
-          </div>
-        {{/each}}
-    </script>
+    <script type="text/javascript" src="./assets/js/templates.js"></script>
   </body>
 </html>
