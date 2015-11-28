@@ -36,8 +36,7 @@
 		var simpleSheet = true;
 
 		if(typeof(this.popupTemplate) === 'string') {
-				var source   = document.getElementById(this.popupTemplate).innerHTML;
-				this.popupTemplate = Handlebars.compile(source);
+				this.popupTemplate =  ArtPubApp.popup;
 		}
 		this.markerOptions = options.markerOptions || {};
 
@@ -59,7 +58,7 @@
 			var elements = preProcessElements( tabletop.sheets(this.sheetName).elements );
 
 			// template test
-			initList(elements);
+			initApp(elements);
 
 			for(var i = 0; i < elements.length; i++) {
 				var point = new Mapsheet.Point( { model: elements[i], fields: this.fields, popupContent: this.popupContent, popupTemplate: this.popupTemplate, markerOptions: this.markerOptions, titleColumn: this.titleColumn, click: this.click } );
