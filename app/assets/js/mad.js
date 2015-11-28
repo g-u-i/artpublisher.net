@@ -31,11 +31,12 @@ function listUpdate(e){
   var filtered = elements;
   var place = $("#places .selector").val();
 
+  if(place !== 'all') filtered = _.select(filtered, "cityId", $(this).val());
+
   $('#filters input:not(:checked)').each(function(f){
     filtered = _.reject(filtered, "@"+this.id ,"1");
   });
 
-  if(place !== 'all') filtered = _.select(filtered, "cityId", $(this).val())
   $('#list').html(ArtPubApp.list({'items':filtered}));
 }
 
