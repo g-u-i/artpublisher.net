@@ -1,5 +1,6 @@
 bower_components
 node_modules
 serverConfig.json
-app/assets/css/
+app/assets/css/*.css
 app/assets/js/all.min.js
+.babelrc
