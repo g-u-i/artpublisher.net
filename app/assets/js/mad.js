@@ -15,8 +15,22 @@ function init() {
   window.map = map;
 }
 
-function createList(elements){
+function initList(elements){
+  console.log(elements.length)
   var listSource   = document.getElementById('list-template').innerHTML;
   var listTemplate = Handlebars.compile(listSource);
   $('#list').html(listTemplate({'items':elements}));
+}
+
+function preProcessElements(elements){
+
+  return _(elements)
+        .filter(function(d){return d.lat !== "" && d.lng !== ""} )
+        // .filter(function(d){return d.city === "Berlin"} )
+        .sortByAll(["country", "city", "name"])
+        .forEach(function(d){
+          d.lat = d.lat.replace(",",".");
+          d.lng = d.lng.replace(",",".");
+        })
+        .value();
 }

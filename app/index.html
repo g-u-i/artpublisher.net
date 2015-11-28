@@ -51,24 +51,12 @@
             <p class='col-sm-1'>country</p>
             <p class='col-sm-2'>city</p>
             <p class='col-sm-4'>www</p>
-            <p class='col-sm-5'>activity</p>
           </div>
         {{#each items}}
           <div class="row">
             <div class='col-sm-1'>{{country}}</div>
             <div class='col-sm-2'>{{city}}</div>
-            <div class='col-sm-4'><a href='http://{{website}}' target='_blank'>{{name}}</a></div>
-            <div class='col-sm-5'>
-              {{#if publisher}} publisher, {{/if}}
-              {{#if distributor}} distributor, {{/if}}
-              {{#if bookShop}} bookShop, {{/if}}
-              {{#if collection}} collection, {{/if}}
-              {{#if artSpace}} artSpace, {{/if}}
-              {{#if research}} research, {{/if}}
-              {{#if website}} website, {{/if}}
-              {{#if blogInfo}} blogInfo, {{/if}}
-              {{#if fair}} fair, {{/if}}
-            </div>
+            <div class='col-sm-5'><a href='http://{{website}}' target='_blank'>{{name}}</a></div>
           </div>
         {{/each}}
     </script>

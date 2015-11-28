@@ -54,24 +54,12 @@
     loadPoints: function(data, tabletop) {
 			this.points = [];
 
-			if(typeof(this.sheetName) === 'undefined') {
-				this.sheetName = tabletop.model_names[0];
-			}
+			if(typeof(this.sheetName) === 'undefined') this.sheetName = tabletop.model_names[0];
 
-			var elements = _(tabletop.sheets(this.sheetName).elements)
-        .filter(function(d){return d.lat !== "" && d.lng !== ""} )
-        // .filter(function(d){return d.city === "Berlin"} )
-        .sortByAll(["country", "city", "name"])
-        .forEach(function(d){
-          d.lat = d.lat.replace(",",".");
-          d.lng = d.lng.replace(",",".");
-        })
-
-        .value();
+			var elements = preProcessElements( tabletop.sheets(this.sheetName).elements );
 
 			// template test
-			punchcard(elements);
-			createList(elements);
+			initList(elements);
 
 			for(var i = 0; i < elements.length; i++) {
 				var point = new Mapsheet.Point( { model: elements[i], fields: this.fields, popupContent: this.popupContent, popupTemplate: this.popupTemplate, markerOptions: this.markerOptions, titleColumn: this.titleColumn, click: this.click } );
@@ -162,9 +150,7 @@
   };
 
 	/*
-
 		Providers only need respond to initialize and drawPoints
-
 	*/
 
 	Mapsheet.Providers = {};
@@ -173,7 +159,6 @@
 		this.map = options.map;
 
     // http://leaflet-extras.github.io/leaflet-providers/preview/
-
 		var attribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
 		var layerDefaults = {

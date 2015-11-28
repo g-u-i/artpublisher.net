@@ -15,7 +15,7 @@ gulp.task('sass', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('build', function() {
+gulp.task('js', function() {
     return gulp.src([
       './bower_components/jquery/dist/jquery.js',
       './bower_components/tabletop/src/tabletop.js',
@@ -23,7 +23,8 @@ gulp.task('build', function() {
       './bower_components/d3/d3.js',
       './bower_components/handlebars/handlebars.min.js',
       './bower_components/bootstrap/dist/js/bootstrap.js',
-      './bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js'
+      './bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js',
+      './bower_components/masonry/dist/masonry.pkgd.js'
        ],
       {base: 'bower_components/'}
     )
@@ -32,13 +33,15 @@ gulp.task('build', function() {
     .pipe(gulp.dest('./app/assets/js/'));
 });
 
-gulp.task('serve', ['sass'], function() {
+
+gulp.task('serve', function() {
     browserSync.init({ server: "./app" });
+
     gulp.watch('./app/assets/scss/*.scss', ['sass']);
     gulp.watch("app/*.html").on('change', browserSync.reload);
 });
 
-gulp.task( 'deploy', function () {
+gulp.task( 'deploy', ['build'], function () {
 
     var conn = ftp.create(serverConfig);
     var globs = [
@@ -54,6 +57,7 @@ gulp.task( 'deploy', function () {
         .pipe( conn.newer( '/' ) ) // only upload newer files
         .pipe( conn.dest( '/' ) );
 
-} );
+});
 
-gulp.task('default', [ 'sass', 'build', 'watch']);
+gulp.task('build',['sass', 'js']);
+gulp.task('default', ['build', 'watch']);
