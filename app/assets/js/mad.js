@@ -27,17 +27,12 @@ function initApp(data){
 }
 
 function listUpdate(e){
-
-  var filtered = elements;
   var place = $("#places .selector").val();
+  var filters = {};
 
-  if(place !== 'all') filtered = _.select(filtered, "cityId", $(this).val());
-
-  $('#filters input:not(:checked)').each(function(f){
-    filtered = _.reject(filtered, "@"+this.id ,"1");
-  });
-
-  $('#list').html(ArtPubApp.list({'items':filtered}));
+  if(place !== 'all') filters["cityId"] = place;
+  $('#filters input:not(:checked)').each(function(f){ filters["@"+this.id] = "1";});
+  $('#list').html(ArtPubApp.list({'items':_.filter(elements, filters)}));
 }
 
 // get filter from rownames
@@ -53,7 +48,9 @@ function getPlaces(elements){
   return _(elements)
     .sortByAll(["country", "city"],["desc", "desc"])
     .uniq(function(d){ return d.country+d.city;})
-    .uniq()
+    .forEach(function(d){
+      d.count = _(elements).filter('city',d.city).keys().value().length;
+    })
     .value()
 }
 
