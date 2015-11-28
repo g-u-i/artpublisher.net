@@ -22,6 +22,7 @@
     "lodash": "~3.10.1",
     "mapsheet": "jsoma/mapsheet",
     "tabletop": "~1.4.2",
-    "isotope": "~2.2.2"
+    "isotope": "~2.2.2",
+    "bootstrap-select-sass": "~1.6.3"
   }
 }

@@ -1,5 +1,7 @@
 {{#each items}}
-  <a id="{{slug}}" type="button" class="button" aria-label="Left Align">
-    de {{label}},
-  </a>
+ <div class="checkbox">
+    <label>
+      <input type="checkbox" id="{{label}}" checked> {{label}},
+    </label>
+  </div>
 {{/each}}

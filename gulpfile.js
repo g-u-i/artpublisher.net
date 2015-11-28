@@ -22,14 +22,17 @@ gulp.task('sass', function() {
 gulp.task('js', function() {
     return gulp.src([
       './bower_components/jquery/dist/jquery.js',
-      './bower_components/tabletop/src/tabletop.js',
       './bower_components/lodash/lodash.js',
-      './bower_components/d3/d3.js',
+
+      './bower_components/tabletop/src/tabletop.js',
+
       './bower_components/handlebars/handlebars.min.js',
       './bower_components/bootstrap/dist/js/bootstrap.js',
+      './bower_components//bootstrap-select-sass/js/bootstrap-select.js',
       './bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js',
-      './bower_components/masonry/dist/masonry.pkgd.js'
-       ],
+
+      './app/assets/js/isoCountries.js'
+      ],
       {base: 'bower_components/'}
     )
     .pipe(concat('all.min.js'))
@@ -54,7 +57,7 @@ gulp.task('serve', function() {
 
     gulp.watch('./app/assets/scss/*.scss', ['sass']);
     gulp.watch('./templates/*.hbs', ['templates']);
-    
+
     gulp.watch("./templates/*.hbs").on('change', browserSync.reload);
     gulp.watch("app/*.html").on('change', browserSync.reload);
 });
@@ -77,6 +80,5 @@ gulp.task( 'deploy', ['build'], function () {
 });
 
 
-
-gulp.task('build',['sass', 'js']);
+gulp.task('build',['sass', 'js', 'templates']);
 gulp.task('default', ['build', 'watch']);
