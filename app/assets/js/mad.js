@@ -20,31 +20,18 @@ function initApp(data){
 
   $('#list').html(ArtPubApp.list({'items':elements}));
   $('#filters').html(ArtPubApp.filters({'items':getFilters(elements)}));
-
-
   $('#filters button').click(onFilterClick);
-
 }
 
 function onFilterClick(e){
-  console.log($(this).attr('id'))
 
-  $(this).toggleClass('active')
+  $(this).toggleClass('active');
 
   var activeFilters = $('#filters .active');
-
   var filtered = _(elements).filter(function(d){
-
     var test = true;
-
-    activeFilters.each(function(f){
-      test = test && d["@"+this.id] === "1"
-
-      console.log(d["@"+this.id])
-    });
-
+    activeFilters.each(function(f){test = test && d["@"+this.id] === "1"});
     return test
-
   }).value()
   $('#list').html(ArtPubApp.list({'items':filtered}));
 }
