@@ -1,12 +1,5 @@
-  <div class="row colHeader">
-    <p class='col-sm-1'>country</p>
-    <p class='col-sm-2'>city</p>
-    <p class='col-sm-4'>www</p>
-  </div>
 {{#each items}}
-  <div class="row">
-    <div class='col-sm-1'>{{country}}</div>
-    <div class='col-sm-2'>{{city}}</div>
-    <div class='col-sm-5'><a href='http://{{website}}' target='_blank'>{{name}}</a></div>
+  <div class="col-md-6">
+    <img height="20" src="assets/images/marker-icon.png"> <a href='http://{{website}}' target='_blank'>{{name}}({{country}})</a>, 
   </div>
 {{/each}}

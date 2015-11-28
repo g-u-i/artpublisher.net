@@ -2,11 +2,11 @@ this["ArtPubApp"] = this["ArtPubApp"] || {};
 this["ArtPubApp"]["filters"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "  <button id=\""
+  return "  <a id=\""
     + alias3(((helper = (helper = helpers.slug || (depth0 != null ? depth0.slug : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"slug","hash":{},"data":data}) : helper)))
-    + "\" type=\"button\" class=\"btn btn-default col-sm-2\" aria-label=\"Left Align\">\n    "
+    + "\" type=\"button\" class=\"button\" aria-label=\"Left Align\">\n    de "
     + alias3(((helper = (helper = helpers.label || (depth0 != null ? depth0.label : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"label","hash":{},"data":data}) : helper)))
-    + "\n  </button>\n";
+    + ",\n  </a>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1;
 
@@ -68,18 +68,15 @@ this["ArtPubApp"]["infobox"] = Handlebars.template({"1":function(depth0,helpers,
 this["ArtPubApp"]["list"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
-  return "  <div class=\"row\">\n    <div class='col-sm-1'>"
-    + alias3(((helper = (helper = helpers.country || (depth0 != null ? depth0.country : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"country","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class='col-sm-2'>"
-    + alias3(((helper = (helper = helpers.city || (depth0 != null ? depth0.city : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"city","hash":{},"data":data}) : helper)))
-    + "</div>\n    <div class='col-sm-5'><a href='http://"
+  return "  <div class=\"col-md-6\">\n    <img height=\"20\" src=\"assets/images/marker-icon.png\"> <a href='http://"
     + alias3(((helper = (helper = helpers.website || (depth0 != null ? depth0.website : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"website","hash":{},"data":data}) : helper)))
     + "' target='_blank'>"
     + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</a></div>\n  </div>\n";
+    + "("
+    + alias3(((helper = (helper = helpers.country || (depth0 != null ? depth0.country : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"country","hash":{},"data":data}) : helper)))
+    + ")</a>, \n  </div>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "  <div class=\"row colHeader\">\n    <p class='col-sm-1'>country</p>\n    <p class='col-sm-2'>city</p>\n    <p class='col-sm-4'>www</p>\n  </div>\n"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.items : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+  return ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.items : depth0),{"name":"each","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
 },"useData":true});

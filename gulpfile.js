@@ -54,7 +54,8 @@ gulp.task('serve', function() {
 
     gulp.watch('./app/assets/scss/*.scss', ['sass']);
     gulp.watch('./templates/*.hbs', ['templates']);
-
+    
+    gulp.watch("./templates/*.hbs").on('change', browserSync.reload);
     gulp.watch("app/*.html").on('change', browserSync.reload);
 });
 

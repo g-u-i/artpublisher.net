@@ -20,7 +20,7 @@ function initApp(data){
 
   $('#list').html(ArtPubApp.list({'items':elements}));
   $('#filters').html(ArtPubApp.filters({'items':getFilters(elements)}));
-  $('#filters button').click(onFilterClick);
+  $('#filters .button').click(onFilterClick);
 }
 
 function onFilterClick(e){
