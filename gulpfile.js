@@ -27,17 +27,13 @@ gulp.task('build', function() {
        ],
       {base: 'bower_components/'}
     )
-    .pipe(concat('all.js'))
-    .pipe(gulp.dest('./app/assets/js/'))
-    .pipe(rename('all.min.js'))
+    .pipe(concat('all.min.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./app/assets/js/'));
 });
 
 gulp.task('serve', ['sass'], function() {
     browserSync.init({ server: "./app" });
-
-    // gulp.watch('js/*.js', ['lint', 'scripts']);
     gulp.watch('./app/assets/scss/*.scss', ['sass']);
     gulp.watch("app/*.html").on('change', browserSync.reload);
 });
