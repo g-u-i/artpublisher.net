@@ -25,11 +25,11 @@ function init(data, tabletop){
   L.tileLayer(options.tilePath, options).addTo(map);
 
   var icon = L.icon({
-      iconUrl: 'assets/images/marker-icon.png',
+      iconUrl: 'assets/images/marker-icon.svg',
       shadowUrl: 'assets/images/marker-shadow.png',
-      iconSize:     [38, 95], // size of the icon
+      iconSize:     [29, 95], // size of the icon
       shadowSize:   [50, 64], // size of the shadow
-      iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+      iconAnchor:   [4, 66], // point of the icon which will correspond to marker's location
       shadowAnchor: [4, 62],  // the same for the shadow
       popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
   });
@@ -134,7 +134,7 @@ function preProcessElements(elements){
           d.lng = parseFloat(d.lng.replace(",","."));
 
           d.cityId = slugify(d.city);
-          d.countryName = isoCountries[d.country];
+          // d.countryName = isoCountries[d.country];
 
         })
         .value();
