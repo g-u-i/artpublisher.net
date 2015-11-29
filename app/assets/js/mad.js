@@ -41,26 +41,23 @@ function init(data, tabletop){
   }).value()
 
 
-  displayLists(elements);
+  initInterface(elements);
 }
 
-function displayLists(data){
+function initInterface(data){
 
-  $('#filters').html(ArtPubApp.filters({'items':getFilters(elements)}));
+  $('#filters').html(ArtPubApp.filters({'items':getFiltersList(elements)}));
   $('#places').html(ArtPubApp.selector({'options':getPlaces(elements)}));
-  $( "input, select" ).change(listUpdate);
+  $( "input, select" ).change(onFilterUpdated);
+  map.on('move', onMapMove);
 
-  listUpdate();
+  onFilterUpdated();
 }
 
-function listUpdate(e){
-  var place = $("#places .selector").val();
-  var filters = {};
+// update list on filter changes
+function onFilterUpdated(e){
 
-  if(place !== 'all') filters["cityId"] = place;
-  $('#filters input:not(:checked)').each(function(f){ filters["@"+this.id] = "1";});
-
-  var filtered = _.filter(elements, filters);
+  var filtered = _.filter(elements, getFilters());
   $('#list').html(ArtPubApp.list({'items':filtered}));
 
   var bounds = _.map(filtered, function(d){
@@ -68,11 +65,33 @@ function listUpdate(e){
   });
 
   map.fitBounds(bounds, {padding: [50, 50]});
+}
 
+//
+function onMapMove(){
+  var bounds = map.getBounds();
+  var filtered = _(elements).filter(function(d){
+    return bounds.contains(d.marker.getLatLng())
+  })
+  .filter(getFilters())
+  .value();
+
+  $('#list').html(ArtPubApp.list({'items':filtered}));
+}
+
+// get filters states
+function getFilters(){
+  var place = $("#places .selector").val();
+  var filters = {};
+
+  if(place !== 'all') filters["cityId"] = place;
+  $('#filters input:not(:checked)').each(function(f){ filters["@"+this.id] = "1";});
+
+  return filters;
 }
 
 // get filter from rownames
-function getFilters(elements){
+function getFiltersList(elements){
  return _(elements[0])
     .keys()
     .filter(function(d){ return d.slice(0, 1) === "@"})
