@@ -35,6 +35,10 @@ function init(data, tabletop){
 
   _(elements).forEach(function(d){
     d.marker = L.marker([d.lat, d.lng],markerOptions).addTo(map);
+
+    d.marker.on('click', function(e) {
+      window.location.hash= "#"+d.slug
+    });
   }).value()
 
 
