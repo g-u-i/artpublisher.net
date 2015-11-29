@@ -1,7 +1,6 @@
 {{#each items}}
  <div class="checkbox">
-    <label>
-      <input type="checkbox" id="{{label}}" checked> {{label}},
-    </label>
+    <input id="box{{@index}}" filter="{{label}}" type="checkbox" checked/>
+    <label for="box{{@index}}">{{label}}</label>
   </div>
 {{/each}}

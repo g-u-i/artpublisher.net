@@ -124,7 +124,7 @@ function filterFromView(d){
 // filters states
 function getFilters(){
   var filters = {};
-  $('#filters input:not(:checked)').each(function(f){ filters["@"+this.id] = "1";});
+  $('#filters input:not(:checked)').each(function(f){ filters["@"+$(this).attr('filter')] = "1";});
   return filters;
 }
 
