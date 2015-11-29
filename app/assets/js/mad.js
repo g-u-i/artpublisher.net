@@ -1,22 +1,33 @@
-window.onload = function() { getData() };
+
+
+/* art publisher MAP */
+
 var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1ZMnBLl0f6Xi0lzD7c9fKEGYzPqMQZyNn8mUPCJrve04/pubhtml?gid=1370801409&single=true';
 var elements;
 
-function getData() {
-  var map = Mapsheet( { key: public_spreadsheet_url,
-                element: 'map',
-                popupTemplate: 'popup-template',
-                provider: Mapsheet.Providers.Leaflet,
-                markerOptions: {
-                  iconSize:   [32, 37],
-                  iconAnchor:   [16, 37]
-                }
-  });
-  window.map = map;
+
+
+window.onload = function() {
+  var tabletop = new Tabletop( { key: public_spreadsheet_url, callback: init} );
+};
+
+function init(data, tabletop){
+
+  elements = preProcessElements(data[tabletop.model_names[0]].elements)
+  var map = L.map('map').setView([51.505, -0.09], 13);
+
+  // http://leaflet-extras.github.io/leaflet-providers/preview/
+  var options = {
+    attribution : 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    tilePath : 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png'
+  }
+
+  L.tileLayer(options.tilePath, options).addTo(map);
+
+  displayLists(elements);
 }
 
-function initApp(data){
-  elements = data;
+function displayLists(data){
 
   $('#list').html(ArtPubApp.list({'items':elements}));
 
@@ -32,7 +43,14 @@ function listUpdate(e){
 
   if(place !== 'all') filters["cityId"] = place;
   $('#filters input:not(:checked)').each(function(f){ filters["@"+this.id] = "1";});
-  $('#list').html(ArtPubApp.list({'items':_.filter(elements, filters)}));
+
+  var filtered = _.filter(elements, filters);
+  $('#list').html(ArtPubApp.list({'items':filtered}));
+
+  // var bounds = _.map(filtered, function(d){
+  //   return [d.point.marker._latlng.lat, d.point.marker._latlng.lng]
+  // });
+
 }
 
 // get filter from rownames
