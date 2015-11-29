@@ -1,11 +1,7 @@
-
-
 /* art publisher MAP */
 
 var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1ZMnBLl0f6Xi0lzD7c9fKEGYzPqMQZyNn8mUPCJrve04/pubhtml?gid=1370801409&single=true';
 var elements, map;
-
-
 
 window.onload = function() {
   var tabletop = new Tabletop( { key: public_spreadsheet_url, callback: init} );
@@ -14,12 +10,13 @@ window.onload = function() {
 function init(data, tabletop){
 
   elements = preProcessElements(data[tabletop.model_names[0]].elements)
-  map = L.map('map').setView([51.505, -0.09], 13);
+  map = L.map('map').setView([51.505, -0.09], 0);
 
   // http://leaflet-extras.github.io/leaflet-providers/preview/
   var options = {
     attribution : 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    tilePath : 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png'
+    tilePath : 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
+    minZoom:3
   }
 
   L.tileLayer(options.tilePath, options).addTo(map);
@@ -44,49 +41,86 @@ function init(data, tabletop){
   initInterface(elements);
 }
 
+$(window).on('hashchange', function() {
+
+  var hash = window.location.hash.substr(1)
+  var element = _(elements)
+    .filter('slug',hash)
+    .value()[0];
+
+  $('#details').html(ArtPubApp.details(element));
+});
+
 function initInterface(data){
 
   $('#filters').html(ArtPubApp.filters({'items':getFiltersList(elements)}));
   $('#places').html(ArtPubApp.selector({'options':getPlaces(elements)}));
-  $( "input, select" ).change(onFilterUpdated);
-  map.on('move', onMapMove);
 
-  onFilterUpdated();
+  $( "input" ).change(updateFiltering);
+  $("#places .selector").change(updatePlacement);
+
+  map.on('moveend', updateFromMap);
+
+  updateFiltering();
+  updatePlacement();
+}
+
+function updatePlacement(){
+
+  var cityId = $("#places .selector").val();
+  var bounds = _(elements)
+    .filter(function(d){
+      if(cityId === "all") return true;
+      return d.cityId === cityId
+    })
+    .map(function(d){
+      return [d.marker._latlng.lat, d.marker._latlng.lng]
+    })
+    .value()
+
+  map.fitBounds(bounds, {padding: [50, 50]});
+
+  updateFiltering()
+  updateFromMap()
+
 }
 
 // update list on filter changes
-function onFilterUpdated(e){
+function updateFiltering(){
+  var filtered = _(elements)
+    .forEach(function(d){ map.removeLayer(d.marker) })
+    .filter(getFilters())
+    .forEach(function(d){ d.marker.addTo(map) })
+    .value();
 
-  var filtered = _.filter(elements, getFilters());
   $('#list').html(ArtPubApp.list({'items':filtered}));
-
-  var bounds = _.map(filtered, function(d){
-    return [d.marker._latlng.lat, d.marker._latlng.lng]
-  });
-
-  map.fitBounds(bounds, {padding: [50, 50]});
+  updateFromMap()
 }
 
 //
-function onMapMove(){
-  var bounds = map.getBounds();
-  var filtered = _(elements).filter(function(d){
-    return bounds.contains(d.marker.getLatLng())
-  })
-  .filter(getFilters())
-  .value();
+function updateFromMap(){
 
-  $('#list').html(ArtPubApp.list({'items':filtered}));
+  var newList = _(elements)
+    .filter(filterFromView)
+    .filter(getFilters())
+    .value();
+
+  var cities = _(newList).indexBy("cityId").keys().value();
+
+  $("#places .selector").val(cities.length === 1 ? cities[0] : "all")
+  $('#list').html(ArtPubApp.list({'items':newList}));
 }
 
-// get filters states
+// filter from view
+function filterFromView(d){
+  var bounds = map.getBounds();
+  return bounds.contains(d.marker.getLatLng())
+}
+
+// filters states
 function getFilters(){
-  var place = $("#places .selector").val();
   var filters = {};
-
-  if(place !== 'all') filters["cityId"] = place;
   $('#filters input:not(:checked)').each(function(f){ filters["@"+this.id] = "1";});
-
   return filters;
 }
 
@@ -109,21 +143,6 @@ function getPlaces(elements){
     .value()
 }
 
-function getCoutries(elements){
-  return _(elements)
-    .map(function(d){return _.trim(d.country)})
-    .uniq().sort().compact()
-    .map(function(d){return {id:d, label:isoCountries[d]}})
-    .value()
-}
-function getCities(elements){
-  return _(elements)
-    .map(function(d){return _.trim(d.city)})
-    .uniq().sort().compact()
-    .map(function(d){return {id:slugify(d), label:d}})
-    .value()
-}
-
 function preProcessElements(elements){
 
   return _(elements)
@@ -136,13 +155,15 @@ function preProcessElements(elements){
           d.cityId = slugify(d.city);
           d.countryName = isoCountries[d.country];
 
+          d.slug = slugify(d.name);
+
         })
         .value();
 }
 
 function slugify(text)
 {
-  return text.toString().toLowerCase()
+  return (text).toString().toLowerCase()
     .replace(/\s+/g, '-')           // Replace spaces with -
     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
     .replace(/\-\-+/g, '-')         // Replace multiple - with single -

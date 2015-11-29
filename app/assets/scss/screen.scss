@@ -35,23 +35,47 @@ body {
   font-weight: bold;
   background-color: white;
 }
-
-#map {
-    margin-top: 30px;
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    height: 60%;
+a {
+  color: black;
+  font-weight: 200;
+  font-size: 1.2em;
+  letter-spacing: -0.06em;
 }
 
-.leaflet-container {
+#map {
+  height: 400px;
   background-color:black !important;
-  /* crédit de la carte*/
-  .leaflet-control-attribution {
-    display: none;
+
+  .leaflet-container {
+    background-color:black !important;
+    .leaflet-control-attribution {
+      display: none;
+    }
   }
 }
 
+
+#topContainer {
+
+  color: white;
+  background-color:black;
+
+}
+#intro {
+
+  padding-top: 1em;
+
+  text-align: center;
+  font-family: 'source_code_promedium';
+
+  select {background-color:black}
+  a {color:white;}
+
+}
+
+.selectpicker {
+  background-color: white;
+}
 #list {
   margin-top: 25px;
   padding-right: 30px;
@@ -59,26 +83,7 @@ body {
   white-space: nowrap;
 }
 
-.intro {
-  margin-top: 25px;
-  font-size: 2em;
-  text-align: center;
-  font-family: 'source_code_promedium';
 
-}
-.active {
-  background-color:gold;
-}
-.selectpicker {
-  background-color: white;
-}
-
-a {
-  color: black;
-  font-weight: 200;
-  font-size: 1.2em;
-  letter-spacing: -0.06em;
-}
 .checkbox {
   display:inline-block;
 
