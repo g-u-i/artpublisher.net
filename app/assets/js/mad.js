@@ -134,7 +134,7 @@ function preProcessElements(elements){
           d.lng = parseFloat(d.lng.replace(",","."));
 
           d.cityId = slugify(d.city);
-          // d.countryName = isoCountries[d.country];
+          d.countryName = isoCountries[d.country];
 
         })
         .value();
