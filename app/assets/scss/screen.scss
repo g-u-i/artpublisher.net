@@ -48,15 +48,22 @@ a {
   height: 400px;
   background-color:black !important;
 
-  .leaflet-container {
-    background-color:black !important;
-    .leaflet-control-attribution {
-      display: none;
-    }
-  }
 }
 
+.leaflet-container .leaflet-control-attribution {
+  a {
+   color: white !important;
+  }
 
+  color: white !important;
+
+  background-color:black !important;
+  font-size: 0.6em !important;
+
+  border:0;
+  box-shadow: none !important;
+  border-radius: 1px;
+}
 #topContainer {
 
   color: white;
