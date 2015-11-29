@@ -3,7 +3,7 @@
 /* art publisher MAP */
 
 var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1ZMnBLl0f6Xi0lzD7c9fKEGYzPqMQZyNn8mUPCJrve04/pubhtml?gid=1370801409&single=true';
-var elements;
+var elements, map;
 
 
 
@@ -14,7 +14,7 @@ window.onload = function() {
 function init(data, tabletop){
 
   elements = preProcessElements(data[tabletop.model_names[0]].elements)
-  var map = L.map('map').setView([51.505, -0.09], 13);
+  map = L.map('map').setView([51.505, -0.09], 13);
 
   // http://leaflet-extras.github.io/leaflet-providers/preview/
   var options = {
@@ -24,17 +24,33 @@ function init(data, tabletop){
 
   L.tileLayer(options.tilePath, options).addTo(map);
 
+  var icon = L.icon({
+      iconUrl: 'assets/images/marker-icon.png',
+      shadowUrl: 'assets/images/marker-shadow.png',
+      iconSize:     [38, 95], // size of the icon
+      shadowSize:   [50, 64], // size of the shadow
+      iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+      shadowAnchor: [4, 62],  // the same for the shadow
+      popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  });
+
+  var markerOptions = {icon: icon};
+
+  _(elements).forEach(function(d){
+    d.marker = L.marker([d.lat, d.lng],markerOptions).addTo(map);
+  }).value()
+
+
   displayLists(elements);
 }
 
 function displayLists(data){
 
-  $('#list').html(ArtPubApp.list({'items':elements}));
-
   $('#filters').html(ArtPubApp.filters({'items':getFilters(elements)}));
   $('#places').html(ArtPubApp.selector({'options':getPlaces(elements)}));
-
   $( "input, select" ).change(listUpdate);
+
+  listUpdate();
 }
 
 function listUpdate(e){
@@ -47,9 +63,11 @@ function listUpdate(e){
   var filtered = _.filter(elements, filters);
   $('#list').html(ArtPubApp.list({'items':filtered}));
 
-  // var bounds = _.map(filtered, function(d){
-  //   return [d.point.marker._latlng.lat, d.point.marker._latlng.lng]
-  // });
+  var bounds = _.map(filtered, function(d){
+    return [d.marker._latlng.lat, d.marker._latlng.lng]
+  });
+
+  map.fitBounds(bounds, {padding: [50, 50]});
 
 }
 
@@ -93,8 +111,8 @@ function preProcessElements(elements){
         .filter(function(d){return d.lat !== "" && d.lng !== ""} )
         .sortByAll(["country", "city", "name"])
         .forEach(function(d){
-          d.lat = d.lat.replace(",",".");
-          d.lng = d.lng.replace(",",".");
+          d.lat = parseFloat(d.lat.replace(",","."));
+          d.lng = parseFloat(d.lng.replace(",","."));
 
           d.cityId = slugify(d.city);
           d.countryName = isoCountries[d.country];
