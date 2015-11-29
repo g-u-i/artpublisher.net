@@ -35,14 +35,10 @@
 		// disable this
 		var simpleSheet = true;
 
-		if(typeof(this.popupTemplate) === 'string') {
-				this.popupTemplate =  ArtPubApp.popup;
-		}
+		if(typeof(this.popupTemplate) === 'string') { this.popupTemplate =  ArtPubApp.popup;}
 		this.markerOptions = options.markerOptions || {};
 
-		if(typeof(this.element) === 'string') {
-			this.element = document.getElementById(this.element);
-		};
+		if(typeof(this.element) === 'string') { this.element = document.getElementById(this.element);};
 
 		this.tabletop = new Tabletop( { key: this.key, callback: this.loadPoints, callbackContext: this, simpleSheet: simpleSheet, proxy: options.proxy } );
   };
@@ -63,6 +59,7 @@
 			for(var i = 0; i < elements.length; i++) {
 				var point = new Mapsheet.Point( { model: elements[i], fields: this.fields, popupContent: this.popupContent, popupTemplate: this.popupTemplate, markerOptions: this.markerOptions, titleColumn: this.titleColumn, click: this.click } );
 				this.points.push(point);
+        elements[i].point = point;
 			};
 
 			this.draw();
@@ -74,6 +71,15 @@
       if(this.callback) {
         this.callback.apply(this.callbackContext || this, [this, this.tabletop]);
       }
+    },
+
+    updateBounds: function(bounds) {
+      // console.log(map)
+      console.log(map,this.map, this.renderer, "ahahah")
+      this.renderer.fitBounds(bounds);
+
+      // var group = new L.featureGroup();
+      // this.map.fitBounds(group.getBounds());
     },
 
     log: function(msg) {
@@ -159,12 +165,7 @@
 
     // http://leaflet-extras.github.io/leaflet-providers/preview/
 		var attribution = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
-
-		var layerDefaults = {
-			styleId: 998,
-			attribution: attribution,
-			type: 'osm'
-		};
+		var layerDefaults = { styleId: 998, attribution: attribution,type: 'osm'};
 
 		this.layerOptions = merge_options(layerDefaults, options.layerOptions || {});
 
@@ -212,6 +213,7 @@
 		},
 
 		drawPoints: function(points) {
+
 			for(var i = 0; i < points.length; i++) {
 
 				if(!points[i].isValid()) { continue; }
