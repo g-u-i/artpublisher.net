@@ -1,5 +1,6 @@
 @import '../../../bower_components/bootstrap/scss/bootstrap.scss';
 @import '../../../bower_components/bootstrap-select-sass/sass/bootstrap-select.scss';
+// @import 'http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css';
 
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
@@ -45,7 +46,7 @@ a {
 }
 
 #map {
-  height: 400px;
+  height: 500px;
   background-color:black !important;
 
 }
@@ -64,6 +65,21 @@ a {
   box-shadow: none !important;
   border-radius: 1px;
 }
+
+.leaflet-control-zoom {
+  background-color:black !important;
+  padding:3px !important;
+  border-radius:0 !important;
+
+  * {
+    border-radius:0 !important;
+  }
+
+  a {
+    background-color:white !important;
+    color: transparent !important;
+  }
+}
 #topContainer {
 
   color: white;
@@ -78,13 +94,15 @@ a {
   text-align: center;
   // font-family: 'source_code_promedium';
 
-  select {background-color:black}
-  a {color:white;}
+  // select {background-color:black}
+  // a {color:white;}
 
 }
 
 .selectpicker {
   background-color: white;
+  display: inline;
+
 }
 #list {
   margin-top: 25px;
@@ -93,8 +111,24 @@ a {
   white-space: nowrap;
 }
 
-#details a {
-  color:gold;
+#detailZone {
+
+  //
+
+  #details {
+    text-align: center;
+    &.active {
+      padding:0.5em;
+    }
+    .name {
+      font-weight: bold;
+    }
+  }
+  background-color:gold;
+  color: black;
+
+  a { color:black; }
+
 }
 
 .checkbox {
@@ -110,7 +144,7 @@ input[type=checkbox] { display:none; } /* to hide the checkbox itself */
 input[type=checkbox] + label:before {
   font-family: FontAwesome;
   display: inline-block;
-  color: white;
+  color: black;
 }
 
 input[type=checkbox] + label:before { content: "\f096"; } /* unchecked icon */
