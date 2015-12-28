@@ -31,7 +31,8 @@ gulp.task('js', function() {
       './bower_components//bootstrap-select-sass/js/bootstrap-select.js',
 
       './bower_components/leaflet/dist/leaflet.js',
-      './bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js',
+      './bower_components/leaflet-hash/leaflet-hash.js',
+      // './bower_components/leaflet.markercluster/dist/leaflet.markercluster-src.js',
 
       './app/assets/js/isoCountries.js'
       ],

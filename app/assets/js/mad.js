@@ -2,32 +2,25 @@ $( document ).ready(function() {
     /* art publisher MAP */
 
   var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1ZMnBLl0f6Xi0lzD7c9fKEGYzPqMQZyNn8mUPCJrve04/pubhtml?gid=1370801409&single=true';
-  var elements, map;
+  var elements, map, prevhash;
 
   window.onload = function() {
     var tabletop = new Tabletop( { key: public_spreadsheet_url, callback: init} );
   };
 
-  $(window).on('hashchange', function() {
-
-    var hash = window.location.hash.substr(1)
-
-    if(hash  !== ""){
-      var element = _(elements).filter('slug',hash).value()[0];
-      $('#details').html(ArtPubApp.details(element)).addClass('active');
-    }else{
-      clearDetails()
-    }
-
-  });
+  $(window).on('hashchange', onHashChange);
 
   function onHashChange(){
-    var hash = window.location.hash.substr(1)
+    var hash = window.location.hash.substr(1).split(':')
 
-    if(hash !== ""){
-      var element = _(elements).filter('slug',hash).value()[0];
+    if(hash[0] === "place"){
+      var element = _(elements).filter('slug',hash[1]).value()[0];
       $('#details').html(ArtPubApp.details(element)).addClass('active');
+      window.location.hash = prevhash;
+    }else{
+      prevhash = window.location.hash;
     }
+
   }
 
   function init(data, tabletop){
@@ -39,6 +32,8 @@ $( document ).ready(function() {
     map = L.map('map', mapOptions).setView([51.505, -0.09], 0);
 
     map.zoomControl.setPosition('topright');
+
+    var hash = new L.Hash(map);
 
     // http://leaflet-extras.github.io/leaflet-providers/preview/
     var layerOptions = {
@@ -63,12 +58,8 @@ $( document ).ready(function() {
 
     _(elements).forEach(function(d){
       d.marker = L.marker([d.lat, d.lng],markerOptions).addTo(map);
-
-      d.marker.on('click', function(e) {
-        window.location.hash= "#"+d.slug
-      });
+      d.marker.on('click', function(e) { window.location.hash= "#place:"+d.slug });
     }).value()
-
 
     initInterface(elements);
   }
@@ -78,20 +69,29 @@ $( document ).ready(function() {
     $('#filters').html(ArtPubApp.filters({'items':getFiltersList(elements)}));
     $('#places').html(ArtPubApp.selector({'options':getPlaces(elements)}));
 
-    $( "input" ).change(updateFiltering);
-    $("#places .selector").change(updatePlacement);
+    $( "input" ).change(updateFromFilters);
+    $("#places .selector").change(updateFromSelect);
 
     map.on('moveend', updateFromMap);
 
-    updateFiltering();
-    updatePlacement();
+    console.log(map.getZoom() );
 
-    onHashChange();
+    // if(map.getZoom() < 2){
+    //   updateFromFilters();
+    //   updateFromSelect();
+    // }
+    setTimeout(function(){
+      if(map.getZoom() < 2){
+        updateFromFilters();
+        updateFromSelect();
+      }
+    }, 500)
   }
 
-  function updatePlacement(){
 
+  function updateFromSelect(){
     var cityId = $("#places .selector").val();
+
     var bounds = _(elements)
       .filter(function(d){
         if(cityId === "all") return true;
@@ -104,22 +104,29 @@ $( document ).ready(function() {
 
     map.fitBounds(bounds, {padding: [50, 50]});
 
-    updateFiltering()
+    updateFromFilters()
     updateFromMap()
   }
 
   // update list on filter changes
-  function updateFiltering(){
-    var filtered = _(elements)
+  function updateFromFilters(){
+
+    $("input").prop('disabled', true);
+
+    var newList = _(elements)
       .forEach(function(d){ map.removeLayer(d.marker) })
       .filter(computeFilter)
       .forEach(function(d){ d.marker.addTo(map) })
       .value();
 
-    $('#list').html(ArtPubApp.list({'items':filtered}));
-    updateFromMap()
+    updateList(newList);
+    updateFromMap();
   }
 
+  function updateList(elements){
+    $('#list').html(ArtPubApp.list({'items':elements}));
+    $("input").prop('disabled', false);
+  }
 
   //
   function updateFromMap(){
@@ -132,12 +139,12 @@ $( document ).ready(function() {
     var cities = _(newList).indexBy("cityId").keys().value();
 
     $("#places .selector").val(cities.length === 1 ? cities[0] : "all")
-    $('#list').html(ArtPubApp.list({'items':newList}));
+    updateList(newList);
   }
 
   // clear details
   function clearDetails(){
-    window.location.hash = "";
+    // window.location.hash = "";
     $('#details').empty().removeClass('active');
   }
 
