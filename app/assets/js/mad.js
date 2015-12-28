@@ -181,8 +181,8 @@ $( document ).ready(function() {
 
   function getPlaces(elements){
     return _(elements)
-      .sortByAll(["country", "city"],["desc", "desc"])
-      .uniq(function(d){ return d.country+d.city;})
+      .sortByAll(["country", "cityId"],["desc", "desc"])
+      .uniq(function(d){ return d.country+d.cityId;})
       .forEach(function(d){
         d.count = _(elements).filter('city',d.city).keys().value().length;
       })
@@ -199,6 +199,7 @@ $( document ).ready(function() {
             d.lng = parseFloat(d.lng.replace(",","."));
 
             d.cityId = slugify(d.city);
+            d.city = _.trim(d.city);
             d.countryName = isoCountries[d.country];
 
             d.slug = slugify(d.name);
