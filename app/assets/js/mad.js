@@ -197,7 +197,6 @@ $( document ).ready(function() {
           .forEach(function(d){
             d.lat = parseFloat(d.lat.replace(",","."));
             d.lng = parseFloat(d.lng.replace(",","."));
-
             d.cityId = slugify(d.city);
             d.city = _.trim(d.city);
             d.countryName = isoCountries[d.country];
@@ -207,6 +206,8 @@ $( document ).ready(function() {
             d.website = _.trim(d.website, '/')
 
           })
+          .reject('cityId',"")
+          .reject('country',"")
           .value();
   }
 
