@@ -181,7 +181,7 @@ $( document ).ready(function() {
 
   function getPlaces(elements){
     return _(elements)
-      .sortByAll(["country", "cityId"],["desc", "desc"])
+      .sortByAll(["countryName", "cityId"],["desc", "desc"])
       .uniq(function(d){ return d.country+d.cityId;})
       .forEach(function(d){
         d.count = _(elements).filter('city',d.city).keys().value().length;
