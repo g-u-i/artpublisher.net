@@ -13,16 +13,12 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "v4-dev",
-    "d3": "~3.5.6",
-    "handlebars": "~3.0.0",
     "jquery": "~2.1.4",
-    "leaflet": "~0.7.7",
-    "leaflet.markercluster": "~0.4.0",
     "lodash": "~3.10.1",
-    "mapsheet": "jsoma/mapsheet",
     "tabletop": "~1.4.2",
-    "isotope": "~2.2.2",
-    "bootstrap-select-sass": "~1.6.3"
+    "handlebars": "~4.0.5",
+    "bootstrap": "~3.3.6",
+    "leaflet": "~0.7.7",
+    "leaflet-hash": "*"
   }
 }

@@ -113,7 +113,7 @@ $( document ).ready(function() {
   // update list on filter changes
   function updateFromFilters(){
 
-    $("input").prop('disabled', true);
+    //$("input").prop('disabled', true);
 
     var newList = _(elements)
       .forEach(function(d){ map.removeLayer(d.marker) })
@@ -127,7 +127,7 @@ $( document ).ready(function() {
 
   function updateList(elements){
     $('#list').html(ArtPubApp.list({'items':elements}));
-    $("input").prop('disabled', false);
+    //$("input").prop('disabled', false);
   }
 
   //
