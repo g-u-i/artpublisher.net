@@ -107,12 +107,23 @@ a {
 #list {
   margin-top: 25px;
   padding-right: 30px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
 
   .place {
     font-weight: normal;
     line-height: 1.7em;
+      text-overflow: ellipsis;
+  white-space: nowrap;
+  }
+
+  .empty {
+    background-color:black;
+    color: white;
+    padding:1em;
+    white-space:wrap;
+    text-overflow: clip;
+    text-align: center;
+    border-radius: 6px;
   }
 }
 
