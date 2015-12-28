@@ -61,6 +61,8 @@ $( document ).ready(function() {
       d.marker.on('click', function(e) { window.location.hash= "#place:"+d.slug });
     }).value()
 
+    $('#loading').empty();
+
     initInterface(elements);
   }
 
