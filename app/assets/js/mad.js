@@ -16,6 +16,7 @@ $( document ).ready(function() {
     if(hash[0] === "place"){
       var element = _(elements).filter('slug',hash[1]).value()[0];
       $('#details').html(ArtPubApp.details(element)).addClass('active');
+      window.scrollTo(0, 0);
       window.location.hash = prevhash;
     }else{
       prevhash = window.location.hash;
