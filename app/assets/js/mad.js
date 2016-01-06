@@ -28,6 +28,9 @@ $( document ).ready(function() {
 
     elements = preProcessElements(data[tabletop.model_names[0]].elements)
 
+    console.log(elements);
+
+
     var mapOptions = {};
 
     map = L.map('map', mapOptions).setView([51.505, -0.09], 0);
@@ -194,7 +197,7 @@ $( document ).ready(function() {
 
     return _(elements)
           .filter(function(d){return d.lat !== "" && d.lng !== ""} )
-          .sortByAll(["country", "city", "name"])
+          .sortByAll(["name", "country", "city"])
           .forEach(function(d){
             d.lat = parseFloat(d.lat.replace(",","."));
             d.lng = parseFloat(d.lng.replace(",","."));
@@ -202,7 +205,7 @@ $( document ).ready(function() {
             d.city = _.trim(d.city);
             d.countryName = isoCountries[d.country];
 
-            d.slug = slugify(d.name);
+            d.slug = slugify(d.name+'_'+d.city);
 
             d.website = _.trim(d.website, '/')
 
