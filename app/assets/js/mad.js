@@ -217,7 +217,6 @@ $( document ).ready(function() {
             d.slug = slugify(d.name+'_'+d.city);
 
             d.website = _.trim(d.website, '/')
-
           })
           .reject('cityId',"")
           .reject('country',"")

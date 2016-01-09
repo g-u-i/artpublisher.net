@@ -130,6 +130,10 @@ a {
     text-align: center;
     border-radius: 6px;
   }
+
+  .status-0 a {
+    text-decoration: line-through;
+  }
 }
 
 #detailZone {
