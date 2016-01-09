@@ -1,6 +1,10 @@
-<a class="name col-lg-4 col-md-12" href='http://{{website}}' target='_blank'>{{name}}, {{coordinator}}</a>
-<a class="col-lg-4 col-md-12" href="http://maps.google.com/?q={{Location}}+{{city}}+{{countryName}}" target='_blank'>
+<a class="col-lg-3 col-md-12" href="http://maps.google.com/?q={{Location}}+{{city}}+{{countryName}}" target='_blank'>
   {{Location}}, {{country}}
   <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
 </a>
-<a class="col-lg-4 col-md-12" href='{{website}}' target='_blank' >{{website}}</a>
+<a class="col-lg-6 col-md-12" href='http://{{website}}' target='_blank'>
+
+  <span class="name">{{name}}</span>{{#if coordinator}}, {{coordinator}}{{/if}}
+</a>
+
+<a class="col-lg-3 col-md-12" href='{{website}}' target='_blank' >{{website}}</a>
