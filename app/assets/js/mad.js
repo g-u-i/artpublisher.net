@@ -15,7 +15,16 @@ $( document ).ready(function() {
 
     if(hash[0] === "place"){
       var element = _(elements).filter('slug',hash[1]).value()[0];
+
       $('#details').html(ArtPubApp.details(element)).addClass('active');
+      // $('#'+hash[1]+' img').attr('src', 'assets/images/marker-icon-focus.svg');
+
+      console.log(element);
+
+      map.panTo([element.lat, element.lng]);
+      // map.setZoom(3);
+
+
       window.scrollTo(0, 0);
       window.location.hash = prevhash;
     }else{
@@ -43,7 +52,7 @@ $( document ).ready(function() {
     var layerOptions = {
       attribution : 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       tilePath : 'http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
-      minZoom:3,
+      minZoom:1,
     }
 
     L.tileLayer(layerOptions.tilePath, layerOptions).addTo(map);
