@@ -220,6 +220,7 @@ $( document ).ready(function() {
           })
           .reject('cityId',"")
           .reject('country',"")
+          .reject('public',"0")
           .value();
   }
 
