@@ -96,6 +96,13 @@ a {
   }
 
 }
+
+.btn-lg.round {
+  border-radius: 24px;
+  @include button-variant(black, gold, darken(gold,5%));
+
+}
+
 #intro {
 
   padding-top: 1em;
