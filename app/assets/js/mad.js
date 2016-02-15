@@ -60,11 +60,10 @@ $( document ).ready(function() {
     var icon = L.icon({
         iconUrl: 'assets/images/marker-icon.svg',
         shadowUrl: 'assets/images/marker-shadow.png',
-        iconSize:     [29, 95], // size of the icon
-        shadowSize:   [50, 64], // size of the shadow
-        iconAnchor:   [4, 66], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        iconSize:     [18, 50], // size of the icon
+        shadowSize:   [36, 50], // size of the shadow
+        iconAnchor:   [9, 25], // point of the icon which will correspond to marker's location
+        shadowAnchor: [12, 37]  // the same for the shadow
     });
 
     var markerOptions = {icon: icon};
@@ -88,8 +87,6 @@ $( document ).ready(function() {
     $("#places .selector").change(updateFromSelect);
 
     map.on('moveend', updateFromMap);
-
-    console.log(map.getZoom() );
 
     // if(map.getZoom() < 2){
     //   updateFromFilters();
@@ -207,20 +204,20 @@ $( document ).ready(function() {
     return _(elements)
           .filter(function(d){return d.lat !== "" && d.lng !== ""} )
           .sortByAll(["name", "country", "city"])
+
+          .reject(function(d){ return d.country === "" || _.isUndefined(isoCountries[d.country]) })
+          .reject('public',"0")
+
           .forEach(function(d){
             d.lat = parseFloat(d.lat.replace(",","."));
             d.lng = parseFloat(d.lng.replace(",","."));
             d.cityId = slugify(d.city);
             d.city = _.trim(d.city);
             d.countryName = isoCountries[d.country];
-
             d.slug = slugify(d.name+'_'+d.city);
-
-            d.website = _.trim(d.website, '/')
+            d.website = 'http://' + _.trim(d.website.toLowerCase(), '/').replace('http://','');
           })
           .reject('cityId',"")
-          .reject('country',"")
-          .reject('public',"0")
           .value();
   }
 
